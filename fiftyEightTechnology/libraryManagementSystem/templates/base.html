@@ -1,0 +1,56 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fifty Eight Technology</title>
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    {% load bootstrap5 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+    
+
+</head>
+<body>
+    
+    <div class="sidebar">
+        <img src="{% static 'images/profile_picture.png' %}" alt="Profile Picture" class="profile-picture">
+
+        <div class="search-container">
+            <input type="text" id="sidebarSearchInput" placeholder="Search...">
+        </div>
+        <ul id="sidebarList">
+            <li><a href="{% url 'borrow_book' %}">Borrow Books</a></li>
+            <li><a href="{% url 'all_books' %}">All Books</a></li>
+            <li><a href="{% url 'return_book' %}">Return Books</a></li>
+            <li><a href="{% url 'all_borrowed_books' %}">All borrowed books</a></li>
+            <li><a href="{% url 'overdue_books' %}">Register overdue books</a></li>
+            <li><a href="{% url 'all_overdue_books' %}">Overdue Books</a></li>
+           
+        </ul>
+    </div>
+    <div class="content">
+        {% block content %}
+        
+        {% endblock %}
+    </div>
+
+    <script>
+        const searchInput = document.getElementById('sidebarSearchInput');
+        const sidebarList = document.getElementById('sidebarList').getElementsByTagName('li');
+
+        searchInput.addEventListener('input', function() {
+            const searchTerm = searchInput.value.toLowerCase();
+            for (const item of sidebarList) {
+                const text = item.textContent.toLowerCase();
+                if (text.includes(searchTerm)) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            }
+        });
+    </script>
+</body>
+</html>

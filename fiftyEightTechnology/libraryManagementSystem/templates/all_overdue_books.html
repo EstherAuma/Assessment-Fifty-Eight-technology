@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block content %}
+<h3 class="text-center" style="font-family: 'Times New Roman', Times, serif;">ALL OVERDUE BOOKS</h3>
+<hr>
+<div class="container">
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">Book name</th>
+                <th scope="col">Borrower's Name</th>
+                <th scope="col">Borrowed Date</th>
+                <th scope="col">Due Date</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+            {% for overdue_book in overdue_books %}
+            <tr class="hover-row">
+                <td>{{ overdue_book.borrowed_book.book.name }}</td>
+                <td>{{ overdue_book.username }}</td>
+                <td>{{ overdue_book.borrowed_book.borrowed_date }}</td>
+                <td>{{ overdue_book.borrowed_book.due_date }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+<style>
+   
+    .container {
+        padding-top: 20px;
+        max-width: 800px;
+        margin: 0 auto;
+        background-color: #efefd0;
+        padding: 20px; 
+            }
+   
+    .hover-row:hover {
+        background-color: white;
+    }
+</style>
+{% endblock %}
