@@ -24,7 +24,6 @@ class BorrowedBook(models.Model):
     borrowed_date = models.DateField(auto_now_add=True)
     due_date = models.DateField()
     
-
     def __str__(self):
         return f"{self.book.name} - {self.username}"
     
