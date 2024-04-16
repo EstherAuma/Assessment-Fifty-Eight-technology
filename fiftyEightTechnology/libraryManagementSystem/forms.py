@@ -19,16 +19,16 @@ class ReturnBookForm(forms.ModelForm):
         model = ReturnedBook
         fields = [ 'username','returned_book']
 
-class OverdueBooksForm(forms.ModelForm):
-    due_date = forms.DateField(
-        widget=forms.DateInput(
-            attrs={
-                'type': 'date',
-                'class': 'datepicker' 
-            }
-        )
-    )
+# class OverdueBooksForm(forms.ModelForm):
+#     due_date = forms.DateField(
+#         widget=forms.DateInput(
+#             attrs={
+#                 'type': 'date',
+#                 'class': 'datepicker' 
+#             }
+#         )
+#     )
 
-    class Meta:
-        model = OverdueBook
-        fields = ['borrowed_book','username', 'fine_amount']
+#     class Meta:
+#         model = OverdueBook
+#         fields = ['borrowed_book','username', 'fine_amount']

@@ -30,7 +30,8 @@ class BorrowedBook(models.Model):
     username = models.ForeignKey(User, on_delete=models.CASCADE)
     borrowed_date = models.DateField(auto_now_add=True)
     due_date = models.DateField()
-    
+    fine_amount = models.CharField(max_length=50, null=False, blank=False, default='$10.00 dollars')  # Fine amount field
+
     def __str__(self):
         return f"{self.book.name} - {self.username}"
     
@@ -39,20 +40,28 @@ class BorrowedBook(models.Model):
     
 class ReturnedBook(models.Model):
     returned_book = models.ForeignKey(BorrowedBook, on_delete=models.CASCADE)
-    username= models.ForeignKey(User, on_delete=models.CASCADE)
+    username = models.ForeignKey(User, on_delete=models.CASCADE)
     returned_date = models.DateField(auto_now_add=True)
 
     def __str__(self):
         return f"{self.returned_book.book.name} - Returned"
 
-    
-class OverdueBook(models.Model):
-    borrowed_book = models.ForeignKey(BorrowedBook, on_delete=models.CASCADE)
-    username = models.ForeignKey(User, on_delete=models.CASCADE)
-    fine_amount = models.CharField(max_length=20, default='10 dollars')
+    def increase_copies(self):
+        # Get the returned book
+        returned_book = self.returned_book.book
 
-    def __str__(self):
-        return f"Overdue Book: {self.borrowed_book.book.name} - {self.username}"
+        # Increase the number of copies by 1
+        returned_book.number_of_copies += 1
+        returned_book.save()
+
+    
+# class OverdueBook(models.Model):
+#     borrowed_book = models.ForeignKey(BorrowedBook, on_delete=models.CASCADE)
+#     username = models.ForeignKey(User, on_delete=models.CASCADE)
+#     fine_amount = models.CharField(max_length=20, default='10 dollars')
+
+#     def __str__(self):
+#         return f"Overdue Book: {self.borrowed_book.book.name} - {self.username}"
 
     
 

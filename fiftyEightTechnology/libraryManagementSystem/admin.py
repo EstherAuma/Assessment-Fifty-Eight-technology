@@ -4,4 +4,4 @@ from .models import *
 admin.site.register(Book)
 admin.site.register(BorrowedBook)
 admin.site.register(ReturnedBook)
-admin.site.register(OverdueBook)
+# admin.site.register(OverdueBook)
