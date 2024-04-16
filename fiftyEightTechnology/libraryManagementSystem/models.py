@@ -5,14 +5,21 @@ from django.utils import timezone
 
 # Create your models here.
 class Book(models.Model):
-    name = models.CharField(max_length= 25, blank=False, null=False)
-    genre = models.CharField(max_length= 50, blank=False, null=False)
-    availability = models.BooleanField(default=True)
+    YES = 'Yes'
+    NO = 'No'
+    AVAILABILITY_CHOICES = [
+        (YES, 'Yes'),
+        (NO, 'No'),
+    ]
+
+    name = models.CharField(max_length=25, blank=False, null=False)
+    genre = models.CharField(max_length=50, blank=False, null=False)
+    availability = models.CharField(max_length=3, choices=AVAILABILITY_CHOICES, default=YES)
     number_of_copies = models.IntegerField(blank=False, null=False)
-    book_number = models.CharField(max_length= 25, blank=False, null=False)
-    author = models.CharField(max_length= 25, blank=False, null=False)
-    publisher = models.CharField(max_length= 25, blank=False, null=False)
-    Language = models.CharField(max_length= 25,default= 'English' )
+    book_number = models.CharField(max_length=25, blank=False, null=False)
+    author = models.CharField(max_length=25, blank=False, null=False)
+    publisher = models.CharField(max_length=25, blank=False, null=False)
+    language = models.CharField(max_length=25, default='English')
 
     def __str__(self):
         return self.name

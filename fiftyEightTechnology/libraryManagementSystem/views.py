@@ -12,13 +12,16 @@ def borrow_book(request):
         if form.is_valid():
             book_id = form.cleaned_data['book'].id
             book = Book.objects.get(pk=book_id)
-            if book.number_of_copies > 0:
+            if book.availability == Book.YES and book.number_of_copies > 0:
                 borrowed_book = form.save()
                 book.number_of_copies -= 1
                 book.save()
                 return redirect('all_books')
             else:
-                form.add_error(None, 'No copies of this book available for borrowing.')
+                if book.availability == Book.NO:
+                    form.add_error(None, 'This book is not available for borrowing.')
+                else:
+                    form.add_error(None, 'No copies of this book available for borrowing.')
     else:
         form = BorrowBookForm()
     return render(request, 'borrow_book.html', {'form': form})
