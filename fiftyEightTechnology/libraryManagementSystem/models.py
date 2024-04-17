@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.utils import timezone
 
 
-# Create your models here.
+# book model
 class Book(models.Model):
     YES = 'Yes'
     NO = 'No'
@@ -24,20 +24,21 @@ class Book(models.Model):
     def __str__(self):
         return self.name
 
-
+#borrow book model
 class BorrowedBook(models.Model):
     book = models.ForeignKey(Book, on_delete=models.CASCADE)
     username = models.ForeignKey(User, on_delete=models.CASCADE)
     borrowed_date = models.DateField(auto_now_add=True)
     due_date = models.DateField()
-    fine_amount = models.CharField(max_length=50, null=False, blank=False, default='$10.00 dollars')  # Fine amount field
+    fine_amount = models.CharField(max_length=50, null=False, blank=False, default='$10.00 dollars')  
 
     def __str__(self):
         return f"{self.book.name} - {self.username}"
     
     def is_overdue(self):
         return self.due_date < timezone.now().date()
-    
+
+ #return book model   
 class ReturnedBook(models.Model):
     returned_book = models.ForeignKey(BorrowedBook, on_delete=models.CASCADE)
     username = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -55,13 +56,6 @@ class ReturnedBook(models.Model):
         returned_book.save()
 
     
-# class OverdueBook(models.Model):
-#     borrowed_book = models.ForeignKey(BorrowedBook, on_delete=models.CASCADE)
-#     username = models.ForeignKey(User, on_delete=models.CASCADE)
-#     fine_amount = models.CharField(max_length=20, default='10 dollars')
-
-#     def __str__(self):
-#         return f"Overdue Book: {self.borrowed_book.book.name} - {self.username}"
 
     
 

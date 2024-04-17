@@ -4,8 +4,8 @@ from .models import Book,BorrowedBook,ReturnedBook
 from django.contrib import messages
 from django.utils import timezone
 
-# Create your views here.
-# views.py
+
+# borrow books
 def borrow_book(request):
     if request.method == 'POST':
         form = BorrowBookForm(request.POST)
@@ -27,6 +27,8 @@ def all_books(request):
     books = Book.objects.all().order_by('id')  
     return render(request, 'all_books.html', {'books': books})
 
+
+#return books
 def return_book(request):
     if request.method == 'POST':
         form = ReturnBookForm(request.POST)
@@ -40,6 +42,9 @@ def return_book(request):
     else:
         form = ReturnBookForm()
     return render(request, 'return_book.html', {'form': form})
+
+
+#all borrowed books
 def all_borrowed_books(request):
     borrowed_books = BorrowedBook.objects.all()
     
@@ -49,18 +54,7 @@ def all_borrowed_books(request):
     return render(request, 'all_borrowed_books.html', context)
 
 
-# def overdue_books(request):
-#     if request.method == 'POST':
-#         form = OverdueBooksForm(request.POST)
-#         if form.is_valid():
-#             form.save()
-#             return redirect('all_overdue_books')
-#     else:
-#         form = OverdueBooksForm()
-        
-#     context = {'form': form}
-#     return render(request, 'overdue_books.html', context)
-
+#overdue books
 def overdue_books(request):
     overdue_books = BorrowedBook.objects.filter(due_date__lt=timezone.now().date())
     return render(request, 'overdue_books.html', {'overdue_books': overdue_books})
